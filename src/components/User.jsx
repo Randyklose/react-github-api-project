@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+
 class User extends React.Component {
     constructor() {
         super();
@@ -19,8 +20,8 @@ class User extends React.Component {
     the data -- in the callback -- we call `setState` to put the user data in our state. This will trigger a re-render.
     When `render` gets called again, `this.state.user` exists and we get the user info display instead of "LOADING..."
     */
-    componentDidMount() {
-        fetch(`https://api.github.com/users/${this.props.params.username}`)
+    fetchData() {
+        fetch(`https://api.github.com/users/${this.props.params.username}?access_token=2c927c835e4e710d0c7a0d11ac89924c64b98ea5`)
         .then(response => response.json())
         .then(
             user => {
@@ -33,6 +34,15 @@ class User extends React.Component {
         );
     }
 
+  componentDidMount(){
+  this.fetchData()
+}
+
+componentDidUpdate(prevProps, prevState){
+  if(prevProps.params.username !== this.props.params.username){
+    this.fetchData()
+  }
+}
     /*
     This method is used as a mapping function. Eventually this could be factored out to its own component.
     */
@@ -78,17 +88,18 @@ class User extends React.Component {
         // Look in index.css for the styles that make this look like it does
         return (
             <div className="user-page">
-                <div className="user-info">
-                    <Link className="user-info__text" to={`/user/${user.login}`}>
-                        <img className="user-info__avatar" src={user.avatar_url} alt={`${user.login} avatar`}/>
-                        <h2 className="user-info__title">{user.login} ({user.name})</h2>
-                        <p className="user-info__bio">{user.bio}</p>
-                    </Link>
+              <div className="user-info">
+                <Link className="user-info__text" to={`/user/${user.login}`}>
+                  <img className="user-info__avatar" src={user.avatar_url} alt={`${user.login} avatar`}/>
+                  <h2 className="user-info__title">{user.login} ({user.name})</h2>
+                  <p className="user-info__bio">{user.bio}</p>
+                </Link>
 
-                    <ul className="user-info__stats">
-                        {stats.map(this.renderStat)}
-                    </ul>
-                </div>
+                <ul className="user-info__stats">
+                  {stats.map(this.renderStat)}
+                </ul>
+              </div>
+              {this.props.children}
             </div>
         );
     }

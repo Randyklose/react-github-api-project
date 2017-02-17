@@ -51,7 +51,15 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 
+.followers-page{
+  display: flex;
+  flex-wrap: wrap;
+  }
 
+.followers {
+  display: flex;
+  flex-flow:column;
+}
 
 
 .user-info {
@@ -70,6 +78,10 @@ h1,h2,h3,h4,h5,h6 {
 .user-info__text {
     text-decoration: none;
     flex: 1;
+}
+.user-info__text {
+  line-height: 2em;
+  color:black;
 }
 
 .user-info__title {
