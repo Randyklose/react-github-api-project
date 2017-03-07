@@ -10,7 +10,8 @@ class Followers extends React.Component{
 
   fetchData(){
     fetch(`https://api.github.com/users/${this.props.params.username}/followers?access_token=2c927c835e4e710d0c7a0d11ac89924c64b98ea5`)
-    .then(response => response.json())
+    .then(response => console.log(response))
+      //response.json())
     .then(
         follower => {
             // How can we use `this` inside a callback without binding it??
